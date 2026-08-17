@@ -80,6 +80,7 @@ const GAIDGE_BENCHMARKS = {
     { month: "Aug 23", total: 1366, emergency: 104 },
     { month: "Sep 23", total: 1094, emergency: 90 },
   ],
+  conversionBaseline: 68, // Gaidge industry-average patient conversion rate (%)
 };
 
 // ─── Utility ────────────────────────────────────────────────────
@@ -405,6 +406,8 @@ function LightForceCalculator() {
     avgFeeAdjustment: 0.05,
     // Schedule
     monthlyClinicDays: 16,
+    // Patient Conversion
+    conversionLift: 5, // Generative Braces Conversion Lift Assumption (percentage points above Gaidge baseline)
   });
 
   // Fixed constants
@@ -542,6 +545,20 @@ function LightForceCalculator() {
     const avgCollection = i.avgTreatmentFee * (1 - i.avgFeeAdjustment);
     const valuePerVisitBaseline = avgCollection / i.avgVisits;
 
+    // ── Patient Conversion Impact ──
+    // The Gaidge industry baseline conversion rate represents the share of
+    // consultations that become starts. The Conversion Lift Assumption models
+    // how many additional percentage points Generative Braces adds on top of
+    // that baseline (e.g. an easier case-acceptance conversation, a more
+    // compelling treatment experience, etc). Since starts/year is already an
+    // input, we scale it proportionally to the improved conversion rate,
+    // holding the number of consultations/leads constant.
+    const conversionBaseline = GAIDGE_BENCHMARKS.conversionBaseline;
+    const lfConversionRate = conversionBaseline + i.conversionLift;
+    const conversionExtraStarts = i.startsPerYear * (i.conversionLift / conversionBaseline);
+    const newStartsPerYear = i.startsPerYear + conversionExtraStarts;
+    const conversionExtraRevenue = conversionExtraStarts * i.avgTreatmentFee;
+
     return {
       patientsPerDay,
       apptCapDay,
@@ -551,6 +568,11 @@ function LightForceCalculator() {
       valuePerVisitBaseline,
       avgCollection,
       scenarios,
+      conversionBaseline,
+      lfConversionRate,
+      conversionExtraStarts,
+      newStartsPerYear,
+      conversionExtraRevenue,
     };
   }, [inputs]);
 
@@ -611,7 +633,7 @@ function LightForceCalculator() {
   </div>
 
   <div style="background:#ffffff;padding:28px 36px;border:1px solid #e5eaed;border-top:none;">
-    <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #F0C75E;padding-bottom:8px;">💰 Value per Visit</h2>
+    <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #F0C75E;padding-bottom:8px;">Value per Visit</h2>
     <p style="margin:0 0 16px;font-size:12px;color:#888;line-height:1.5;">Fewer visits at the same case fee means each appointment is worth more — the most powerful lever for profitability.</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <tr style="background:#f3f5f6;">
@@ -625,7 +647,7 @@ function LightForceCalculator() {
   </div>
 
   <div style="background:#ffffff;padding:28px 36px;border:1px solid #e5eaed;border-top:none;">
-    <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #5BC4C4;padding-bottom:8px;">📈 Profit per Clinical Day</h2>
+    <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #5BC4C4;padding-bottom:8px;">Profit per Clinical Day</h2>
     <p style="margin:0 0 16px;font-size:12px;color:#888;line-height:1.5;">Per Gaidge analysis: every $1 increase in Value per Visit = $5 additional profit per clinical day.</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <tr style="background:#f3f5f6;">
@@ -646,6 +668,22 @@ function LightForceCalculator() {
       <div style="font-size:11px;color:#8BA8B4;text-transform:uppercase;letter-spacing:0.08em;">LightForce (${i.lfVisits} visits): Annual Profit Gain from Value/Visit Improvement</div>
       <div style="font-size:36px;font-weight:700;color:#F0C75E;margin-top:6px;">+$${Math.round((s.valuePerVisitNew - calc.valuePerVisitBaseline) * 5 * i.monthlyClinicDays * 12).toLocaleString()}</div>
       <div style="font-size:12px;color:#8BA8B4;margin-top:4px;">+$${Math.round(s.valuePerVisitNew - calc.valuePerVisitBaseline)} Value/Visit × $5/day × ${i.monthlyClinicDays} days/mo × 12 months</div>
+    </div>
+  </div>
+
+  <div style="background:#ffffff;padding:28px 36px;border:1px solid #e5eaed;border-top:none;">
+    <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #5BC4C4;padding-bottom:8px;">Patient Conversion Impact</h2>
+    <p style="margin:0 0 16px;font-size:12px;color:#888;line-height:1.5;">Gaidge benchmarking puts the industry-average patient conversion rate at ${calc.conversionBaseline}%. Modeled here with a Generative Braces Conversion Lift Assumption of ${i.conversionLift}%.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <tr style="background:#f0faf5;"><td style="padding:10px 12px;color:#666;font-weight:500;">Gaidge Industry Baseline Conversion</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#1A4A5A;">${calc.conversionBaseline}%</td></tr>
+      <tr><td style="padding:10px 12px;color:#666;font-weight:500;">Generative Braces Conversion Lift Assumption</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#1A4A5A;">+${i.conversionLift}%</td></tr>
+      <tr style="background:#f0faf5;"><td style="padding:10px 12px;color:#666;font-weight:500;">Generative Braces Conversion Rate</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#B48200;">${calc.lfConversionRate.toFixed(0)}%</td></tr>
+      <tr><td style="padding:10px 12px;color:#666;font-weight:500;">Starts / Year (Current)</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#1A4A5A;">${i.startsPerYear.toLocaleString()}</td></tr>
+      <tr style="background:#f0faf5;"><td style="padding:10px 12px;color:#666;font-weight:500;">Additional Starts / Year</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#7EDAB0;">+${calc.conversionExtraStarts.toFixed(1)}</td></tr>
+    </table>
+    <div style="margin-top:20px;background:linear-gradient(135deg,#0B1A1F,#132F3B);border-radius:10px;padding:20px 24px;text-align:center;">
+      <div style="font-size:12px;color:#8BA8B4;text-transform:uppercase;letter-spacing:0.08em;">Additional Revenue / Year from Conversion Lift</div>
+      <div style="font-size:32px;font-weight:700;color:#F0C75E;margin-top:4px;">+$${Math.round(calc.conversionExtraRevenue).toLocaleString()}</div>
     </div>
   </div>
 
@@ -900,6 +938,48 @@ function LightForceCalculator() {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
     doc.text(`+$${Math.round(profitYear).toLocaleString()}`, pageW / 2, y + 48, { align: "center" });
+
+    y += 80;
+
+    // ── Patient Conversion Impact ──
+    ensureSpace(220);
+    doc.autoTable({
+      startY: y,
+      head: [["Patient Conversion Impact", "Result"]],
+      body: [
+        ["Gaidge Industry Baseline Conversion", `${calc.conversionBaseline}%`],
+        ["Generative Braces Conversion Lift Assumption", `+${i.conversionLift}%`],
+        ["Generative Braces Conversion Rate", `${calc.lfConversionRate.toFixed(0)}%`],
+        ["Starts / Year (Current)", i.startsPerYear.toLocaleString()],
+        ["Additional Starts / Year", `+${calc.conversionExtraStarts.toFixed(1)}`],
+      ],
+      theme: "plain",
+      headStyles: { fillColor: [176, 222, 223], textColor: [3, 36, 38], fontStyle: "bold", fontSize: 10 },
+      bodyStyles: { fontSize: 9, textColor: [3, 36, 38] }, // BRAND.ink (Dark Teal)
+      alternateRowStyles: { fillColor: [240, 250, 245] },
+      columnStyles: { 0: { cellWidth: labelColW }, 1: { cellWidth: valueColsW, halign: "right", fontStyle: "bold" } },
+      margin: { left: tableMargin, right: tableMargin },
+      didParseCell: (data) => {
+        if (data.section === "head" && data.column.index === 1) {
+          data.cell.styles.halign = "right";
+        }
+      },
+    });
+
+    y = doc.lastAutoTable.finalY + 20;
+
+    // Additional revenue from conversion lift callout
+    ensureSpace(100);
+    doc.setFillColor(176, 222, 223); // light blue box
+    doc.roundedRect(40, y, pageW - 80, 60, 6, 6, "F");
+    doc.setTextColor(26, 74, 90); // BRAND.teal
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text(`ADDITIONAL REVENUE / YEAR FROM ${i.conversionLift}% CONVERSION LIFT`, pageW / 2, y + 22, { align: "center" });
+    doc.setTextColor(122, 154, 46); // BRAND.chartreuseText
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(24);
+    doc.text(`+$${Math.round(calc.conversionExtraRevenue).toLocaleString()}`, pageW / 2, y + 48, { align: "center" });
 
     // Footer
     const pageH = doc.internal.pageSize.getHeight();
@@ -1542,7 +1622,6 @@ Please send this email now. The body is HTML formatted and should be sent as an 
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${BRAND.chartreuse}, ${BRAND.mint}, ${BRAND.aqua})` }} />
 
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                <span style={{ fontSize: 24 }}>💰</span>
                 <h2 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: BRAND.white, fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.02em" }}>
                   Value per Visit
                 </h2>
@@ -1642,7 +1721,6 @@ Please send this email now. The body is HTML formatted and should be sent as an 
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                <span style={{ fontSize: 24 }}>📈</span>
                 <h2 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: BRAND.white, fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.02em" }}>
                   Profit per Clinical Day
                 </h2>
@@ -1749,6 +1827,91 @@ Please send this email now. The body is HTML formatted and should be sent as an 
               })()}
             </div>
 
+            {/* ═══ PATIENT CONVERSION IMPACT ═══ */}
+            <div
+              style={{
+                marginTop: 20,
+                background: BRAND.cardBg,
+                border: "1px solid rgba(126,218,176,0.1)",
+                borderRadius: 18,
+                padding: "22px 24px",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                <h2 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: BRAND.white, fontFamily: "'DM Sans', sans-serif", letterSpacing: "-0.02em" }}>
+                  Patient Conversion Impact
+                </h2>
+              </div>
+              <p style={{ margin: "0 0 8px", fontSize: 14, color: BRAND.muted, lineHeight: 1.6, maxWidth: 700 }}>
+                Gaidge benchmarking puts the industry-average patient conversion rate at <strong style={{ color: BRAND.chartreuseText }}>68%</strong>. Model how much additional case acceptance Generative Braces drives — and what that means for starts and revenue.
+              </p>
+              <div style={{ fontSize: 12, color: BRAND.aquaText, marginBottom: 24, fontStyle: "italic" }}>
+                Source: Gaidge consulting baseline — 68% average patient conversion rate
+              </div>
+
+              {/* Baseline vs Generative Braces conversion rate */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, marginBottom: 24 }}>
+                <div style={{ background: "rgba(176,222,223,0.35)", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(126,218,176,0.12)" }}>
+                  <div style={{ fontSize: 10, color: BRAND.muted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
+                    Gaidge Industry Baseline Conversion
+                  </div>
+                  <div style={{ fontSize: 36, fontWeight: 800, color: BRAND.white, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
+                    {calc.conversionBaseline}%
+                  </div>
+                </div>
+                <div style={{ background: "linear-gradient(135deg, rgba(240,199,94,0.15), rgba(240,199,94,0.06))", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(240,199,94,0.3)" }}>
+                  <div style={{ fontSize: 10, color: BRAND.chartreuseText, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
+                    Generative Braces Conversion Rate
+                  </div>
+                  <div style={{ fontSize: 36, fontWeight: 800, color: BRAND.chartreuseText, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
+                    {fmt(calc.lfConversionRate, 0)}%
+                  </div>
+                  <div style={{ fontSize: 12, color: BRAND.chartreuseText, marginTop: 6, fontWeight: 600 }}>
+                    +{inputs.conversionLift}pts vs baseline
+                  </div>
+                </div>
+              </div>
+
+              {/* Slider */}
+              <div style={{ maxWidth: 420, marginBottom: 28 }}>
+                <SliderField
+                  label="Generative Braces Conversion Lift Assumption"
+                  value={inputs.conversionLift}
+                  onChange={update("conversionLift")}
+                  min={0}
+                  max={20}
+                  suffix="%"
+                />
+              </div>
+
+              {/* Result cards */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
+                <div style={{ background: "rgba(176,222,223,0.35)", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(126,218,176,0.12)" }}>
+                  <div style={{ fontSize: 10, color: BRAND.muted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
+                    Additional Starts / Year
+                  </div>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: BRAND.mintText, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
+                    +{fmt(calc.conversionExtraStarts, 1)}
+                  </div>
+                  <div style={{ fontSize: 12, color: BRAND.muted, marginTop: 6 }}>
+                    {fmt(inputs.startsPerYear)} → {fmt(Math.round(calc.newStartsPerYear))} starts / year
+                  </div>
+                </div>
+                <div style={{ background: "linear-gradient(135deg, rgba(240,199,94,0.12), rgba(240,160,94,0.06))", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(240,199,94,0.3)" }}>
+                  <div style={{ fontSize: 10, color: BRAND.chartreuseText, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
+                    Additional Revenue / Year
+                  </div>
+                  <div style={{ fontSize: 32, fontWeight: 800, color: BRAND.chartreuseText, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
+                    +{fmtCurrency(Math.round(calc.conversionExtraRevenue))}
+                  </div>
+                  <div style={{ fontSize: 12, color: BRAND.muted, marginTop: 6 }}>
+                    at {fmtCurrency(inputs.avgTreatmentFee)} avg treatment fee
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
 
@@ -1769,7 +1932,6 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                 gap: 12,
               }}
             >
-              <span style={{ fontSize: 22 }}>📈</span>
               <div>
                 <div
                   style={{
