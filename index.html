@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LightForce Treatment Efficiency Calculator</title>
+  <title>LightForce — The Generative Braces Economic Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -528,6 +528,17 @@ function LightForceCalculator() {
       };
     });
 
+    // The "best" scenario is whichever option actually yields the highest
+    // value per visit (and therefore the highest extra profit per day, since
+    // profit/day is just value-per-visit-delta × 5 — a fixed multiplier).
+    // This is NOT always the LightForce scenario: depending on the LF Visits
+    // slider, a 20% or 40% Shorter preset can outperform it.
+    const bestIdx = scenarios.reduce(
+      (bestI, s, idx) => (s.valuePerVisitNew > scenarios[bestI].valuePerVisitNew ? idx : bestI),
+      0
+    );
+    scenarios.forEach((s, idx) => { s.isBest = idx === bestIdx; });
+
     const avgCollection = i.avgTreatmentFee * (1 - i.avgFeeAdjustment);
     const valuePerVisitBaseline = avgCollection / i.avgVisits;
 
@@ -1013,7 +1024,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                   textTransform: "uppercase",
                 }}
               >
-                Treatment Efficiency Calculator
+                The Generative Braces Economic Calculator
               </div>
             </div>
           </div>
@@ -1557,28 +1568,28 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                   const delta = s.valuePerVisitNew - calc.valuePerVisitBaseline;
                   return (
                     <div key={i} style={{
-                      background: s.isLF
+                      background: s.isBest
                         ? "linear-gradient(135deg, rgba(240,199,94,0.15), rgba(240,199,94,0.06))"
                         : "rgba(176,222,223,0.35)",
                       borderRadius: 14,
                       padding: "20px 22px",
-                      border: s.isLF
+                      border: s.isBest
                         ? "1px solid rgba(240,199,94,0.3)"
                         : "1px solid rgba(126,218,176,0.12)",
                       position: "relative",
                     }}>
-                      {s.isLF && (
+                      {s.isBest && (
                         <div style={{ position: "absolute", top: 10, right: 12, background: BRAND.chartreuse, color: BRAND.ink, border: `1px solid ${BRAND.darkTeal}`, fontSize: 9, fontWeight: 700, padding: "3px 8px", borderRadius: 12, letterSpacing: "0.05em", textTransform: "uppercase" }}>
                           Best
                         </div>
                       )}
-                      <div style={{ fontSize: 10, color: s.isLF ? BRAND.chartreuseText : BRAND.muted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
+                      <div style={{ fontSize: 10, color: s.isBest ? BRAND.chartreuseText : BRAND.muted, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 8 }}>
                         {s.isLF ? s.label : `${Math.round(s.reduction * 100)}% Shorter`}
                       </div>
-                      <div style={{ fontSize: 36, fontWeight: 800, color: s.isLF ? BRAND.chartreuseText : BRAND.mintText, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
+                      <div style={{ fontSize: 36, fontWeight: 800, color: s.isBest ? BRAND.chartreuseText : BRAND.mintText, fontFamily: "'DM Sans', sans-serif", lineHeight: 1 }}>
                         {fmtCurrency(Math.round(s.valuePerVisitNew))}
                       </div>
-                      <div style={{ fontSize: 13, color: s.isLF ? BRAND.chartreuseText : BRAND.mintText, marginTop: 6, fontWeight: 600 }}>
+                      <div style={{ fontSize: 13, color: s.isBest ? BRAND.chartreuseText : BRAND.mintText, marginTop: 6, fontWeight: 600 }}>
                         +{fmtCurrency(Math.round(delta))} per visit
                       </div>
                       <div style={{ fontSize: 11, color: BRAND.muted, marginTop: 2 }}>{fmt(s.newVisits, 1)} visits per treatment</div>
@@ -1652,26 +1663,26 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                   const profitPerYear = profitPerMonth * 12;
                   return (
                     <div key={i} style={{
-                      background: s.isLF
+                      background: s.isBest
                         ? "linear-gradient(135deg, rgba(240,199,94,0.12), rgba(240,160,94,0.06))"
                         : "rgba(176,222,223,0.35)",
                       borderRadius: 14,
                       padding: "22px 24px",
-                      border: s.isLF ? "1px solid rgba(240,199,94,0.3)" : "1px solid rgba(126,218,176,0.1)",
+                      border: s.isBest ? "1px solid rgba(240,199,94,0.3)" : "1px solid rgba(126,218,176,0.1)",
                       position: "relative",
                     }}>
-                      {s.isLF && (
+                      {s.isBest && (
                         <div style={{ position: "absolute", top: 10, right: 12, background: BRAND.chartreuse, color: BRAND.ink, border: `1px solid ${BRAND.darkTeal}`, fontSize: 9, fontWeight: 700, padding: "3px 8px", borderRadius: 12, letterSpacing: "0.05em", textTransform: "uppercase" }}>
                           Max Impact
                         </div>
                       )}
-                      <div style={{ fontSize: 11, color: s.isLF ? BRAND.chartreuseText : BRAND.mintText, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 14 }}>
+                      <div style={{ fontSize: 11, color: s.isBest ? BRAND.chartreuseText : BRAND.mintText, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 14 }}>
                         {s.isLF ? s.label : `${Math.round(s.reduction * 100)}% Shorter Treatment`}
                       </div>
 
                       <div style={{ marginBottom: 12 }}>
                         <div style={{ fontSize: 11, color: BRAND.muted, marginBottom: 3 }}>Value/Visit Increase</div>
-                        <div style={{ fontSize: 20, fontWeight: 700, color: s.isLF ? BRAND.chartreuseText : BRAND.mintText }}>+{fmtCurrency(Math.round(vpvDelta))}</div>
+                        <div style={{ fontSize: 20, fontWeight: 700, color: s.isBest ? BRAND.chartreuseText : BRAND.mintText }}>+{fmtCurrency(Math.round(vpvDelta))}</div>
                       </div>
 
                       <div style={{ height: 1, background: "rgba(126,218,176,0.1)", margin: "0 0 12px" }} />
@@ -1683,7 +1694,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
 
                       <div style={{ marginBottom: 10 }}>
                         <div style={{ fontSize: 11, color: BRAND.muted, marginBottom: 3 }}>Extra Profit / Day</div>
-                        <div style={{ fontSize: 28, fontWeight: 800, color: s.isLF ? BRAND.chartreuseText : BRAND.mintText, fontFamily: "'DM Sans', sans-serif" }}>
+                        <div style={{ fontSize: 28, fontWeight: 800, color: s.isBest ? BRAND.chartreuseText : BRAND.mintText, fontFamily: "'DM Sans', sans-serif" }}>
                           +{fmtCurrency(Math.round(profitPerDay))}
                         </div>
                       </div>
@@ -1694,7 +1705,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "6px 0", borderTop: "1px solid rgba(126,218,176,0.06)" }}>
                         <span style={{ color: BRAND.muted }}>Per Year</span>
-                        <span style={{ color: s.isLF ? BRAND.chartreuseText : BRAND.mintText, fontWeight: 700, fontSize: 14 }}>+{fmtCurrency(Math.round(profitPerYear))}</span>
+                        <span style={{ color: s.isBest ? BRAND.chartreuseText : BRAND.mintText, fontWeight: 700, fontSize: 14 }}>+{fmtCurrency(Math.round(profitPerYear))}</span>
                       </div>
                     </div>
                   );
@@ -1703,7 +1714,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
 
               {/* Summary callout */}
               {(() => {
-                const best = calc.scenarios[2];
+                const best = calc.scenarios.find((s) => s.isBest);
                 const vpvDelta = best.valuePerVisitNew - calc.valuePerVisitBaseline;
                 const profitPerDay = vpvDelta * 5;
                 const profitPerYear = profitPerDay * inputs.monthlyClinicDays * 12;
