@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LightForce — The Generative Braces Economic Calculator</title>
+  <title>LightForce: The Generative Braces Economic Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -621,7 +621,7 @@ function LightForceCalculator() {
 <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;background:#f8fafb;padding:0;">
   <div style="background:linear-gradient(135deg,#0B1A1F,#132F3B);padding:32px 36px;border-radius:12px 12px 0 0;">
     <h1 style="margin:0;color:#7EDAB0;font-size:22px;letter-spacing:0.08em;">LIGHTFORCE</h1>
-    <p style="margin:4px 0 0;color:#8BA8B4;font-size:13px;">Treatment Efficiency Report — LightForce (${i.lfVisits} visits, ${lfPct}% reduction)</p>
+    <p style="margin:4px 0 0;color:#8BA8B4;font-size:13px;">Treatment Efficiency Report for LightForce (${i.lfVisits} visits, ${lfPct}% reduction)</p>
   </div>
 
   ${emailNote ? `<div style="background:#eef6f2;padding:16px 36px;border-left:4px solid #7EDAB0;margin:0;font-size:14px;color:#333;line-height:1.6;">${emailNote}</div>` : ""}
@@ -642,7 +642,7 @@ function LightForceCalculator() {
   </div>
 
   <div style="background:#ffffff;padding:28px 36px;border:1px solid #e5eaed;border-top:none;">
-    <h2 style="margin:0 0 16px;font-size:16px;color:#132F3B;border-bottom:2px solid #F0C75E;padding-bottom:8px;">LightForce (${i.lfVisits} visits, ${lfPct}% reduction) — Impact Summary</h2>
+    <h2 style="margin:0 0 16px;font-size:16px;color:#132F3B;border-bottom:2px solid #F0C75E;padding-bottom:8px;">LightForce (${i.lfVisits} visits, ${lfPct}% reduction) Impact Summary</h2>
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <tr style="background:#f0faf5;"><td style="padding:10px 12px;color:#666;font-weight:500;">Current Patients / Day</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#1A4A5A;">${i.patientsPerDay}</td></tr>
       <tr><td style="padding:10px 12px;color:#666;font-weight:500;">Reduced Patients / Day</td><td style="padding:10px 12px;text-align:right;font-weight:700;color:#7EDAB0;">${Math.round(s.reducedPatientsPerDay)} <span style="font-size:11px;color:#8BA8B4;">(${Math.round(s.apptsSavedPerDay)} fewer)</span></td></tr>
@@ -662,7 +662,7 @@ function LightForceCalculator() {
 
   <div style="background:#ffffff;padding:28px 36px;border:1px solid #e5eaed;border-top:none;">
     <h2 style="margin:0 0 4px;font-size:16px;color:#132F3B;border-bottom:2px solid #F0C75E;padding-bottom:8px;">Value per Visit</h2>
-    <p style="margin:0 0 16px;font-size:12px;color:#888;line-height:1.5;">${calc.lfFeeDelta !== 0 ? `Fewer visits — plus a ${calc.lfFeeDelta > 0 ? 'higher' : 'lower'} LightForce treatment fee — means each appointment is worth more.` : 'Fewer visits at the same case fee means each appointment is worth more — the most powerful lever for profitability.'}</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#888;line-height:1.5;">${calc.lfFeeDelta !== 0 ? `Fewer visits, plus a ${calc.lfFeeDelta > 0 ? 'higher' : 'lower'} LightForce treatment fee, means each appointment is worth more.` : 'Fewer visits at the same case fee means each appointment is worth more: the most powerful lever for profitability.'}</p>
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
       <tr style="background:#f3f5f6;">
         <th style="padding:10px 12px;text-align:left;color:#666;font-size:11px;text-transform:uppercase;">Scenario</th>
@@ -728,7 +728,7 @@ function LightForceCalculator() {
 
   <div style="background:#f8fafb;padding:20px 36px;text-align:center;border-radius:0 0 12px 12px;border:1px solid #e5eaed;border-top:none;">
     <p style="margin:0;font-size:11px;color:#8BA8B4;line-height:1.6;">
-      Powered by <a href="https://lf.co" style="color:#5BC4C4;text-decoration:none;">LightForce Orthodontics</a> — The world's leader in Generative Braces.<br/>
+      Powered by <a href="https://lf.co" style="color:#5BC4C4;text-decoration:none;">LightForce Orthodontics</a>, the world's leader in Generative Braces.<br/>
       Results are estimates and vary by practice.
     </p>
   </div>
@@ -766,7 +766,7 @@ function LightForceCalculator() {
     doc.setTextColor(26, 74, 90); // BRAND.teal (legible dark caption)
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(`Treatment Efficiency Report — LightForce (${i.lfVisits} visits, ${lfReductionPct}% reduction)`, 40, 56);
+    doc.text(`Treatment Efficiency Report for LightForce (${i.lfVisits} visits, ${lfReductionPct}% reduction)`, 40, 56);
     doc.setFontSize(8);
     const today = new Date().toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" });
     if (practiceName.trim()) {
@@ -857,7 +857,7 @@ function LightForceCalculator() {
     ensureSpace(320);
     doc.autoTable({
       startY: y,
-      head: [[`LightForce (${i.lfVisits} visits, ${lfReductionPct}% reduction) — Impact`, "Result"]],
+      head: [[`LightForce (${i.lfVisits} visits, ${lfReductionPct}% reduction) Impact`, "Result"]],
       body: [
         ["Current Patients / Day", `${i.patientsPerDay}`],
         ["Reduced Patients / Day", `${Math.round(s.reducedPatientsPerDay)} (${Math.round(s.apptsSavedPerDay)} fewer)`],
@@ -1012,6 +1012,152 @@ function LightForceCalculator() {
     doc.setFontSize(24);
     doc.text(`+$${Math.round(calc.conversionExtraRevenue).toLocaleString()}`, pageW / 2, y + 48, { align: "center" });
 
+    // ═══ PAGE: RECOMMENDED NEXT STEPS ═══
+    doc.addPage();
+    y = 60;
+
+    doc.setFillColor(176, 222, 223); // light blue banner
+    doc.roundedRect(40, y, pageW - 80, 46, 8, 8, "F");
+    doc.setTextColor(3, 36, 38); // BRAND.ink (Dark Teal)
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(15);
+    doc.text("Recommended Next Steps", 55, y + 20);
+    doc.setTextColor(26, 74, 90); // BRAND.teal
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("A recommended inventory commitment sized to your practice, plus ways to see LightForce results from peers.", 55, y + 35);
+
+    y += 66;
+
+    // ── Virtual Inventory Recommendations ──
+    doc.setTextColor(3, 36, 38);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("Virtual Inventory Recommendations", 40, y);
+    doc.setTextColor(61, 90, 102);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text(`Sized to your practice's current ${i.startsPerYear.toLocaleString()} annual case starts.`, 40, y + 14);
+    y += 30;
+
+    const vipListPrice = 974;
+    const vipStandardSh = 19.99;
+    const vipTiers = getRecommendedVipTiers(i.startsPerYear).map((plan) => {
+      const orderValue = i.startsPerYear * plan.price;
+      const monthlyAtMax = orderValue / plan.splitMonthsMax;
+      const savingsPerCase = vipListPrice - plan.price;
+      const annualSavings = savingsPerCase * i.startsPerYear;
+      const shSavings = !plan.sh ? vipStandardSh * i.startsPerYear : 0;
+      return { ...plan, monthlyAtMax, annualSavings, shSavings };
+    });
+
+    doc.autoTable({
+      startY: y,
+      head: [["Plan Tier", "Price / Case", "Est. Monthly Payment", "Annual Savings", "Extended Terms"]],
+      body: vipTiers.map((t) => [
+        `${t.tier} Cases`,
+        `$${t.price}`,
+        `$${Math.round(t.monthlyAtMax).toLocaleString()} / mo`,
+        `$${Math.round(t.annualSavings).toLocaleString()}${t.shSavings ? ` + $${Math.round(t.shSavings).toLocaleString()} S&H` : ""}`,
+        t.extendedTerms || "None",
+      ]),
+      theme: "plain",
+      headStyles: { fillColor: [176, 222, 223], textColor: [3, 36, 38], fontStyle: "bold", fontSize: 9 },
+      bodyStyles: { fontSize: 9, textColor: [3, 36, 38] },
+      alternateRowStyles: { fillColor: [240, 250, 245] },
+      columnStyles: {
+        0: { cellWidth: 90, fontStyle: "bold" },
+        1: { cellWidth: 75, halign: "right" },
+        2: { cellWidth: 115, halign: "right" },
+        3: { cellWidth: 140, halign: "right" },
+        4: { cellWidth: pageW - 80 - (90 + 75 + 115 + 140), halign: "right" },
+      },
+      margin: { left: 40, right: 40 },
+      didParseCell: (data) => {
+        // Highlight the top (Best) tier row, same convention used elsewhere in this report
+        if (data.section === "body" && data.row.index === vipTiers.length - 1) {
+          data.cell.styles.fillColor = [247, 252, 240];
+          data.cell.styles.fontStyle = "bold";
+        }
+      },
+    });
+
+    y = doc.lastAutoTable.finalY + 12;
+    doc.setTextColor(61, 90, 102);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.text(
+      `Pricing calculated against a standard list price of $${vipListPrice}/case. Est. monthly payment assumes your current volume spread across each tier's longest available split-payment window.`,
+      40,
+      y,
+      { maxWidth: pageW - 80 }
+    );
+
+    y += 36;
+
+    // ── Education and Peer Validation ──
+    ensureSpace(140);
+    doc.setTextColor(3, 36, 38);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13);
+    doc.text("Education and Peer Validation", 40, y);
+    doc.setTextColor(61, 90, 102);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("See how other practices are using LightForce to drive treatment efficiency and value, straight from the source.", 40, y + 14, { maxWidth: pageW - 80 });
+    y += 34;
+
+    const webinars = [
+      {
+        title: "The Power of Personalization",
+        schedule: "UPCOMING: WED, SEP 16, 2026 - 6:30 PM ET",
+        blurb: "Digital treatment planning and a fully custom appliance for challenging cases, including vertically impacted teeth, Class II Div 2, and canine substitution.",
+        url: "https://www.bigmarker.com/lightforceortho/the-power-of-personalization",
+      },
+      {
+        title: "Personalizing the Prescription",
+        schedule: "ON-DEMAND: WATCH ANYTIME",
+        blurb: "Custom vs. stock bracket prescriptions, with real case reviews showing how personalized bracket design changes clinical outcomes.",
+        url: "https://www.bigmarker.com/lightforceortho/personalizing-the-prescription-d63425181d49",
+      },
+      {
+        title: "Better Tracking, Better Treatment",
+        schedule: "ON-DEMAND: WATCH ANYTIME",
+        blurb: "How remote monitoring helps LightForce practices track case progress and catch issues between visits.",
+        url: "https://www.bigmarker.com/lightforceortho/better-tracking-better-treatment-remote-monitoring-for-lightforce-cases",
+      },
+    ];
+
+    webinars.forEach((w) => {
+      ensureSpace(120);
+      const boxH = 86;
+      doc.setFillColor(217, 240, 240); // light blue tint box
+      doc.setDrawColor(176, 222, 223);
+      doc.roundedRect(40, y, pageW - 80, boxH, 6, 6, "FD");
+
+      doc.setTextColor(3, 36, 38);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.text(w.title, 52, y + 18);
+
+      doc.setTextColor(122, 154, 46); // BRAND.chartreuseText
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8);
+      doc.text(w.schedule, 52, y + 31);
+
+      doc.setTextColor(61, 90, 102);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.text(w.blurb, 52, y + 44, { maxWidth: pageW - 104 });
+
+      doc.setTextColor(26, 74, 90); // BRAND.teal
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(8);
+      doc.textWithLink(w.schedule.startsWith("UPCOMING") ? "Register ->" : "Watch Webinar ->", 52, y + boxH - 10, { url: w.url });
+
+      y += boxH + 12;
+    });
+
     // Footer
     const pageH = doc.internal.pageSize.getHeight();
     doc.setDrawColor(185, 203, 210); // brand-muted derived divider
@@ -1019,7 +1165,7 @@ function LightForceCalculator() {
     doc.setTextColor(61, 90, 102); // BRAND.muted (darkened for legibility on white page)
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
-    doc.text("Powered by LightForce Orthodontics — The world's leader in Generative Braces.", pageW / 2, pageH - 25, { align: "center" });
+    doc.text("Powered by LightForce Orthodontics, the world's leader in Generative Braces.", pageW / 2, pageH - 25, { align: "center" });
     doc.text("Gaidge benchmarking data in USD. Results are estimates and vary by practice.", pageW / 2, pageH - 14, { align: "center" });
 
     const safeName = practiceName.trim().replace(/[^a-zA-Z0-9_\- ]/g, "").replace(/\s+/g, "_");
@@ -1343,7 +1489,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
             >
               <SectionHeader
                 title="Practice Inputs"
-                subtitle="Adjust your practice metrics — Clinical Hours fixed at 8hrs/day"
+                subtitle="Adjust your practice metrics (Clinical Hours fixed at 8hrs/day)"
               />
 
               {/* Practice Name */}
@@ -1398,7 +1544,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                     step={100}
                     prefix="$"
                     suffix=""
-                    tooltip="Case fee used for all three scenarios (20% Shorter, 40% Shorter, LightForce) — independent from your standard Avg Treatment Fee"
+                    tooltip="Case fee used for all three scenarios (20% Shorter, 40% Shorter, LightForce), independent from your standard Avg Treatment Fee"
                   />
                   {calc.lfFeeDelta !== 0 && (
                     <div style={{ fontSize: 11, color: calc.lfFeeDelta > 0 ? BRAND.chartreuseText : BRAND.coralText, marginTop: -10, marginBottom: 18, fontWeight: 600 }}>
@@ -1682,7 +1828,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
               </div>
               <p style={{ margin: "0 0 24px", fontSize: 14, color: BRAND.muted, lineHeight: 1.6, maxWidth: 600 }}>
                 {calc.lfFeeDelta !== 0
-                  ? `Fewer visits — plus a ${calc.lfFeeDelta > 0 ? "higher" : "lower"} LightForce treatment fee — means each appointment is worth more. This is one of the most powerful levers for practice profitability.`
+                  ? `Fewer visits, plus a ${calc.lfFeeDelta > 0 ? "higher" : "lower"} LightForce treatment fee, means each appointment is worth more. This is one of the most powerful levers for practice profitability.`
                   : "Fewer visits at the same case fee means each appointment is worth more. This is the single most powerful lever for practice profitability."}
               </p>
 
@@ -1785,7 +1931,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                 Based on Gaidge practice analysis, every <strong style={{ color: BRAND.chartreuseText }}>$1 increase in Value per Visit</strong> translates to an additional <strong style={{ color: BRAND.chartreuseText }}>$5 in profit per clinical day</strong>.
               </p>
               <div style={{ fontSize: 12, color: BRAND.aquaText, marginBottom: 24, fontStyle: "italic" }}>
-                Source: Gaidge 2022 profit analysis — $1 Value per Visit ≈ $5 Profit/Day impact
+                Source: Gaidge 2022 profit analysis. $1 Value per Visit ≈ $5 Profit/Day impact
               </div>
 
               {/* Profit/Day cards */}
@@ -1900,10 +2046,10 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                 </h2>
               </div>
               <p style={{ margin: "0 0 8px", fontSize: 14, color: BRAND.muted, lineHeight: 1.6, maxWidth: 700 }}>
-                Gaidge benchmarking puts the industry-average patient conversion rate at <strong style={{ color: BRAND.chartreuseText }}>68%</strong>. Model how much additional case acceptance Generative Braces drives — and what that means for starts and revenue.
+                Gaidge benchmarking puts the industry-average patient conversion rate at <strong style={{ color: BRAND.chartreuseText }}>68%</strong>. Model how much additional case acceptance Generative Braces drives, and what that means for starts and revenue.
               </p>
               <div style={{ fontSize: 12, color: BRAND.aquaText, marginBottom: 24, fontStyle: "italic" }}>
-                Source: Gaidge consulting baseline — 68% average patient conversion rate
+                Source: Gaidge consulting baseline (68% average patient conversion rate)
               </div>
 
               {/* Baseline vs Generative Braces conversion rate */}
@@ -2005,8 +2151,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                     marginTop: 2,
                   }}
                 >
-                  2023 YTD Treatment Efficiency Results (Jan–Sep 2023)
-                  — use as comparison targets for your practice
+                  2023 YTD Treatment Efficiency Results (Jan–Sep 2023), for use as comparison targets for your practice
                 </div>
               </div>
             </div>
@@ -2543,7 +2688,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
             >
               <SectionHeader
                 title="Virtual Inventory Recommendations"
-                subtitle={`Sized to your practice's current ${fmt(inputs.startsPerYear)} annual case starts — LightForce Virtual Inventory Plan`}
+                subtitle={`Sized to your practice's current ${fmt(inputs.startsPerYear)} annual case starts, from the LightForce Virtual Inventory Plan`}
               />
 
               {(() => {
@@ -2571,6 +2716,8 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                       const savingsPerCase = listPrice - plan.price;
                       const savingsPct = (savingsPerCase / listPrice) * 100;
                       const annualSavings = savingsPerCase * inputs.startsPerYear;
+                      const standardSh = 19.99; // S&H fee charged per case on every tier except 200+
+                      const shSavingsAnnual = !plan.sh ? standardSh * inputs.startsPerYear : 0;
                       const prevPlan = idx > 0 ? withMonthly[idx - 1] : null;
                       const monthlyDelta = prevPlan ? prevPlan.monthlyAtMax - plan.monthlyAtMax : 0;
                       return (
@@ -2591,9 +2738,11 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                               Best Cash Flow
                             </div>
                           )}
-                          <div style={{ fontSize: 10, color: rungColor[idx], textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 6 }}>
-                            {rungLabels[idx]}
-                          </div>
+                          {isBest && (
+                            <div style={{ fontSize: 10, color: rungColor[idx], textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 6 }}>
+                              {rungLabels[idx]}
+                            </div>
+                          )}
                           <div style={{ fontSize: 24, fontWeight: 800, color: BRAND.white, fontFamily: "'DM Sans', sans-serif", marginBottom: 2 }}>
                             {plan.tier} Cases
                           </div>
@@ -2641,29 +2790,76 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                               <span style={{ fontSize: 12, color: isBest ? "rgba(232,246,240,0.7)" : BRAND.muted }}>/ mo</span>
                             </div>
                             <div style={{ fontSize: 11, color: isBest ? "rgba(232,246,240,0.7)" : BRAND.muted, marginTop: 4 }}>
-                              spread over {plan.splitMonthsMax} months{plan.splitMonthsMin !== plan.splitMonthsMax ? ` (as short as ${plan.splitMonthsMin})` : ""} at your volume
+                              Spread over {plan.splitMonthsMax} months at your current volume.
                             </div>
                             {isBest && monthlyDelta > 0 && (
                               <div style={{ fontSize: 12, color: BRAND.chartreuse, fontWeight: 700, marginTop: 10, paddingTop: 10, borderTop: "1px solid rgba(232,246,240,0.15)" }}>
-                                ↓ {fmtCurrency(Math.round(monthlyDelta))} less / month than the {prevPlan.tier} plan — at the same case price
+                                ↓ {fmtCurrency(Math.round(monthlyDelta))} less / month than the {prevPlan.tier} plan, at the same case price
                               </div>
                             )}
                           </div>
 
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0" }}>
-                            <span style={{ color: BRAND.muted }}>Shipping & Handling</span>
-                            <span style={{ color: BRAND.white, fontWeight: 600 }}>
-                              {plan.sh ? `$${plan.sh.toFixed(2)} / order` : "Included"}
-                            </span>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0" }}>
-                            <span style={{ color: plan.extendedTerms ? BRAND.muted : "rgba(61,90,102,0.4)" }}>
-                              {plan.extendedTerms ? "✓ Extended Payment Terms" : "— Extended Payment Terms"}
-                            </span>
-                            <span style={{ color: plan.extendedTerms ? BRAND.chartreuseText : "rgba(61,90,102,0.4)", fontWeight: 600 }}>
-                              {plan.extendedTerms || "Not available"}
-                            </span>
-                          </div>
+                          {plan.extendedTerms ? (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 10,
+                                background: isBest ? "rgba(191,230,130,0.18)" : "rgba(97,216,196,0.15)",
+                                border: `${isBest ? 2 : 1}px solid ${isBest ? BRAND.darkTeal : "rgba(97,216,196,0.4)"}`,
+                                borderRadius: 10,
+                                padding: isBest ? "12px 14px" : "8px 12px",
+                                marginBottom: 10,
+                              }}
+                            >
+                              <span style={{ fontSize: isBest ? 22 : 15 }}>{isBest ? "🏆" : "✓"}</span>
+                              <div>
+                                <div style={{ fontSize: isBest ? 16 : 12, fontWeight: 800, color: isBest ? BRAND.chartreuseText : BRAND.aquaText, lineHeight: 1.2 }}>
+                                  {plan.extendedTerms} Extended Payment Terms
+                                </div>
+                                {isBest && (
+                                  <div style={{ fontSize: 11, color: BRAND.chartreuseText, fontWeight: 600, marginTop: 2 }}>
+                                    Longest term of any tier. Best-in-class flexibility.
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ) : (
+                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0" }}>
+                              <span style={{ color: "rgba(61,90,102,0.4)" }}>Extended Payment Terms</span>
+                              <span style={{ color: "rgba(61,90,102,0.4)", fontWeight: 600 }}>Not included</span>
+                            </div>
+                          )}
+
+                          {plan.sh ? (
+                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0" }}>
+                              <span style={{ color: BRAND.muted }}>Shipping & Handling</span>
+                              <span style={{ color: BRAND.white, fontWeight: 600 }}>${plan.sh.toFixed(2)} / order</span>
+                            </div>
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 10,
+                                background: "rgba(126,218,176,0.15)",
+                                border: "1px solid rgba(126,218,176,0.4)",
+                                borderRadius: 10,
+                                padding: "8px 12px",
+                                marginTop: 10,
+                              }}
+                            >
+                              <span style={{ fontSize: 15 }}>📦</span>
+                              <div>
+                                <div style={{ fontSize: 12, fontWeight: 800, color: BRAND.mintText, lineHeight: 1.2 }}>
+                                  Free Shipping & Handling
+                                </div>
+                                <div style={{ fontSize: 11, color: BRAND.mintText, fontWeight: 600, marginTop: 2 }}>
+                                  Save {fmtCurrency(Math.round(shSavingsAnnual))} / yr at your volume
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -2672,7 +2868,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
               })()}
 
               <div style={{ fontSize: 11, color: BRAND.muted, marginTop: 16, fontStyle: "italic" }}>
-                Source: LightForce Virtual Inventory Plan. Pricing per case, in USD, calculated against a standard list price of $974/case. Estimated monthly payments assume your current annual case volume spread evenly across each tier's longest available split-payment window; shorter windows are also available at a higher monthly amount. As your commitment grows across tiers, split-payment windows lengthen and extended (30–60 day) payment terms become available — both add-on benefits beyond the case price savings shown above.
+                Source: LightForce Virtual Inventory Plan. Pricing per case, in USD, calculated against a standard list price of $974/case. Estimated monthly payments assume your current annual case volume spread evenly across each tier's longest available split-payment window; shorter windows are also available at a higher monthly amount. As your commitment grows across tiers, split-payment windows lengthen and extended (30-60 day) payment terms become available. Both are add-on benefits beyond the case price savings shown above.
               </div>
             </div>
 
@@ -2688,14 +2884,14 @@ Please send this email now. The body is HTML formatted and should be sent as an 
             >
               <SectionHeader
                 title="Education and Peer Validation"
-                subtitle="See how other practices are using LightForce to drive treatment efficiency and value — straight from the source"
+                subtitle="See how other practices are using LightForce to drive treatment efficiency and value, straight from the source"
               />
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
                 {[
                   {
                     title: "The Power of Personalization",
-                    blurb: "See how digital treatment planning and a fully custom appliance handle challenging cases — including vertically impacted teeth, Class II Div 2, and canine substitution.",
+                    blurb: "See how digital treatment planning and a fully custom appliance handle challenging cases, including vertically impacted teeth, Class II Div 2, and canine substitution.",
                     url: "https://www.bigmarker.com/lightforceortho/the-power-of-personalization",
                     schedule: { type: "live", label: "Wed, Sep 16, 2026 · 6:30 PM ET" },
                   },
@@ -2703,13 +2899,13 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                     title: "Personalizing the Prescription",
                     blurb: "Compare custom vs. stock bracket prescriptions, and see real case reviews showing how a personalized bracket design changes clinical outcomes.",
                     url: "https://www.bigmarker.com/lightforceortho/personalizing-the-prescription-d63425181d49",
-                    schedule: { type: "ondemand", label: "On-Demand — Watch Anytime" },
+                    schedule: { type: "ondemand", label: "On-Demand: Watch Anytime" },
                   },
                   {
                     title: "Better Tracking, Better Treatment",
                     blurb: "Learn how remote monitoring helps LightForce practices track case progress and catch issues between visits.",
                     url: "https://www.bigmarker.com/lightforceortho/better-tracking-better-treatment-remote-monitoring-for-lightforce-cases",
-                    schedule: { type: "ondemand", label: "On-Demand — Watch Anytime" },
+                    schedule: { type: "ondemand", label: "On-Demand: Watch Anytime" },
                   },
                 ].map((w) => (
                   <div
@@ -2952,7 +3148,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
                 }}
               >
                 <div style={{ fontSize: 11, fontWeight: 600, color: BRAND.aquaText, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 10 }}>
-                  Report Preview — LightForce ({inputs.lfVisits} visits, {Math.round(calc.scenarios[2].reduction * 100)}% reduction)
+                  Report Preview: LightForce ({inputs.lfVisits} visits, {Math.round(calc.scenarios[2].reduction * 100)}% reduction)
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 20px", fontSize: 13 }}>
                   {(() => {
@@ -3062,7 +3258,7 @@ Please send this email now. The body is HTML formatted and should be sent as an 
           >
             LightForce Orthodontics
           </a>{" "}
-          — The world's leader in Generative Braces.
+          , the world's leader in Generative Braces.
           <br />
           Results are estimates and will vary by practice.
         </div>
